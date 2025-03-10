@@ -47,4 +47,11 @@ public class ProductRepository : IProductRepository
         _connection.Execute("INSERT INTO products (NAME, PRICE, CATEGORYID) VALUES (@name, @price, @categoryID);",
             new {name = productToInsert.Name, price = productToInsert.Price, categoryID = productToInsert.CategoryID });
     }
+
+    public void DeleteProduct(Product productToDelete)
+    {
+        _connection.Execute("DELETE FROM REVIEWS WHERE ProductID = @id;", new {id = productToDelete.ProductID });
+        _connection.Execute("DELETE FROM Sales WHERE ProductID = @id;",  new { id = productToDelete.ProductID });
+        _connection.Execute("DELETE FROM Products WHERE ProductID = @id;", new { id = productToDelete.ProductID });
+    }
 }
